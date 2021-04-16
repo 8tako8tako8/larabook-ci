@@ -14,7 +14,7 @@ class NewListControllerTest extends TestCase
     {
         $response = $this->get(route('newlist.index'));
 
-        $response->assertStatus(200)
+        $response->assertStatus(400)
             ->assertViewIs('newlist.index');
     }
 }
