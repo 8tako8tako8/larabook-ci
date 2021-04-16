@@ -1,29 +1,29 @@
 <?php
+use App\Book;
+use Illuminate\Http\Request; 
 
+//Auth
 Auth::routes();
-Route::prefix('login')->name('login.')->group(function () {
-    Route::get('/{provider}', 'Auth\LoginController@redirectToProvider')->name('{provider}');
-    Route::get('/{provider}/callback', 'Auth\LoginController@handleProviderCallback')->name('{provider}.callback');
-});
-Route::prefix('register')->name('register.')->group(function () {
-    Route::get('/{provider}', 'Auth\RegisterController@showProviderUserRegistrationForm')->name('{provider}');
-    Route::post('/{provider}', 'Auth\RegisterController@registerProviderUser')->name('{provider}');
-});
-Route::get('/', 'ArticleController@index')->name('articles.index');
-Route::resource('/articles', 'ArticleController')->except(['index', 'show'])->middleware('auth');
-Route::resource('/articles', 'ArticleController')->only(['show']);
-Route::prefix('articles')->name('articles.')->group(function () {
-    Route::put('/{article}/like', 'ArticleController@like')->name('like')->middleware('auth');
-    Route::delete('/{article}/like', 'ArticleController@unlike')->name('unlike')->middleware('auth');
-});
-Route::get('/tags/{name}', 'TagController@show')->name('tags.show');
-Route::prefix('users')->name('users.')->group(function () {
-    Route::get('/{name}', 'UserController@show')->name('show');
-    Route::get('/{name}/likes', 'UserController@likes')->name('likes');
-    Route::get('/{name}/followings', 'UserController@followings')->name('followings');
-    Route::get('/{name}/followers', 'UserController@followers')->name('followers');
-    Route::middleware('auth')->group(function () {
-        Route::put('/{name}/follow', 'UserController@follow')->name('follow');
-        Route::delete('/{name}/follow', 'UserController@unfollow')->name('unfollow');
-    });
-});
+
+//本登録・ダッシュボード表示
+Route::get('/', 'BookController@index')->name('books.index');
+
+//本検索処理
+Route::post('/books/search','BookController@search')->name('books.search');
+
+//登録処理
+Route::post('/books','BookController@store')->name('books.store');
+
+//更新画面
+Route::post('/booksedit/{books}','BookController@edit')->name('books.edit');
+
+//更新処理
+Route::post('/books/update','BookController@update')->name('books.update');
+
+//本を削除
+Route::delete('/book/{book}','BookController@destroy')->name('books.destroy');
+
+Route::get('/home', 'BookController@index')->name('home'); 
+
+//新着リスト表示
+Route::get('/newlist', 'NewListController@index')->name('newlist.index');

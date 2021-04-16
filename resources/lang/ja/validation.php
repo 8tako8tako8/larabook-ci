@@ -149,6 +149,9 @@ return [
         'name' => 'ユーザー名',
         'email' => 'メールアドレス',
         'password' => 'パスワード',
+        'title' => '書籍名',
+        'memo' => 'メモ',
+        'isbn' => 'ISBN',
     ],
 
 ];
