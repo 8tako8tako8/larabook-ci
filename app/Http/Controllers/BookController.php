@@ -86,7 +86,61 @@ class BookController extends Controller
                 ->withErrors($validator);
         }
 
-        $request_book = $this->getBookInfo($request->isbn);
+        $isbn = $request->isbn;
+        //ISBNが13桁の数字か確認
+        if (mb_strlen($isbn) != 13 || ctype_digit($isbn) == false) {
+            $is_valid = false;
+        } else {
+            $is_valid = true;
+        }
+        //カスタムバリデーション
+        $validator = Validator::make(['isbn' => $is_valid], ['isbn' => 'accepted'], ['ISBNコードは13桁の数字で入力してください']);
+        if ($validator->fails()) {
+            return redirect('/')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $registered_book = Book::where('user_id', Auth::user()->id)->where('isbn', $isbn)->first();
+        if ($registered_book !== NULL) {
+            $is_unregistered = false;
+        } else {
+            $is_unregistered = true;
+        }
+        //カスタムバリデーション
+        $validator = Validator::make(['isbn' => $is_unregistered], ['isbn' => 'accepted'], ['この書籍は登録済みです。']);
+        if ($validator->fails()) {
+            return redirect('/')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        //API取得
+        $base_url = 'https://api.openbd.jp/v1/get?isbn=';
+        $response = file_get_contents($base_url.$isbn);
+        $result = json_decode($response, true);
+
+        if ($result[0] == null) {
+            $is_available = false;
+        } else {
+            $is_available = true;
+        }
+        //カスタムバリデーション
+        $validator = Validator::make(['isbn' => $is_available], ['isbn' => 'accepted'], ['該当するISBNコードは見つかりませんでした。']);
+        if ($validator->fails()) {
+            return redirect('/')
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $title = $result[0]["summary"]["title"];
+        $img = $result[0]["summary"]["cover"];
+        $book = [
+          'title' => $title,
+          'isbn' => $isbn,
+          'img' => $img
+        ];
+        $request_book = $book;
         $books = Book::where('user_id',Auth::user()->id)->orderBy('updated_at', 'desc')->get();
         return view('books.books', ['request_book' => $request_book, 'books' => $books]);
     }

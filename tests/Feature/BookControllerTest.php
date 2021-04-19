@@ -17,7 +17,7 @@ class BookControllerTest extends TestCase
     /**
      * APIで検索し、その本を登録する
      */
-    public function testRegisterBook()
+/*     public function testRegisterBook()
     {
         $user = factory(User::class)->create();
 
@@ -49,12 +49,12 @@ class BookControllerTest extends TestCase
 
         $this->get(route('books.index'))
             ->assertSee('ネットワークはなぜつながるのか : 知っておきたいTCP/IP、LAN、光ファイバの基礎知識');
-    }
+    } */
 
     /**
      * APIで検索し、読了済みにチェックして登録する
      */
-    public function testRegisterBookWithRead()
+/*     public function testRegisterBookWithRead()
     {
         $user = factory(User::class)->create();
 
@@ -89,7 +89,7 @@ class BookControllerTest extends TestCase
         $this->get(route('books.index'))
             ->assertSee('ネットワークはなぜつながるのか : 知っておきたいTCP/IP、LAN、光ファイバの基礎知識');
 
-    }
+    } */
 
     /**
      * 本を検索せずに登録する
