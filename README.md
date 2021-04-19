@@ -20,11 +20,11 @@
 - Laravel 6.12.0
 - MDBootstrap
 - PostgreSQL 11.10
-AWS
+- AWS
 - EC2へデプロイ
-- Route53でDNSレコードを管理
-- ACMでSSL証明書を管理、ALBで使用
-(現在、タイムアウトが多発しているため、http通信で対応、リソースの見直しを検討中)
+    - Route53でDNSレコードを管理
+    - ACMでSSL証明書を管理、ALBで使用
+## (現在、タイムアウトが多発しているため、http通信で対応、リソースの見直しを検討中)
 
 # 開発環境
 - Laradock, Docker-compose
