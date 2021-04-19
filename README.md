@@ -21,7 +21,7 @@
 - MDBootstrap
 - PostgreSQL 11.10
 - AWS
-- EC2へデプロイ
+    - EC2へデプロイ
     - Route53でDNSレコードを管理
     - ACMでSSL証明書を管理、ALBで使用
 ## (現在、タイムアウトが多発しているため、http通信で対応、リソースの見直しを検討中)
