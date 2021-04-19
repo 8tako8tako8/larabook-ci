@@ -14,6 +14,7 @@
 # その他の機能(みんなの本棚)
 - ユーザーが登録した本の新着リストが見れる。(ページネーション機能付き)
 - 新規登録・ログイン・ログアウト機能
+<img width="849" alt="book" src="https://user-images.githubusercontent.com/65395999/115203337-4f8cdb00-a132-11eb-8712-f4e4c316375a.png">
 
 # 技術
 - PHP 7.3.27
